@@ -1,0 +1,39 @@
+spring:
+  profiles: local
+
+server:
+  tomcat:
+    accesslog:
+      pattern: common - %a %u %{yyyy-MM-dd HH:mm:ss}t "%r" %s %b
+      enabled: true
+    basedir: c:/map/log
+  port: 9090
+
+management:
+  security:
+    enabled: false
+
+static:
+  resource:
+    location: file:///C:/map/
+
+mvc:
+  view:
+    prefix: /resources/templates/
+    suffix: .jsp
+
+  datasource:
+    platform: h2
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    database-platform: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+kakao:
+  domain: dapi.kakao.com
+
+---
