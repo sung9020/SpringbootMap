@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @PropertySource("classpath:application.yaml")
@@ -24,6 +25,7 @@ public class KakaoService {
         return new ApiInfoFactory(apiRepository);
     }
 
+    @Transactional(readOnly = true)
     public ApiInfoDto getKakaoApiInfo(){
 
         ApiInfoDto kakaoApiInfo = apiInfoFactoryBuilder().createApiInfo(kakaoDomain);

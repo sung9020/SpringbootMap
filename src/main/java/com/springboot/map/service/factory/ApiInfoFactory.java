@@ -5,8 +5,7 @@ import com.springboot.map.dto.UserInfoDto;
 import com.springboot.map.entity.ApiInfo;
 import com.springboot.map.repositoy.ApiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 public class ApiInfoFactory {
 
@@ -16,7 +15,7 @@ public class ApiInfoFactory {
         this.apiRepository = apiRepository;
     }
 
-    @Transactional
+
     public ApiInfoDto createApiInfo(String domain){
        ApiInfoDto mapApi = apiRepository.findByDomain(domain).findFirst().map(ApiInfoDto::new).get();
        return mapApi;

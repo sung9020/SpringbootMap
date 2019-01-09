@@ -10,6 +10,7 @@ import com.springboot.map.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
@@ -34,22 +35,26 @@ public class SearchService {
         return result;
     }
 
-    private String makeParam(RequestDto requestDto){
+    private String makeParam(RequestDto requestDto) throws UnsupportedEncodingException {
 
         Map<String, Object> reuqestMap = mapper.convertValue(requestDto, Map.class);
-        StringBuilder paramText = new StringBuilder();
-        paramText.append("?");
+        StringBuffer paramText = new StringBuffer();
 
-        reuqestMap.forEach((key,value) ->{
-            paramText.append(key);
-            paramText.append("=");
-            paramText.append(value);
-            paramText.append("&");
-        });
 
-        if(paramText.length() > 1)
-        paramText.substring(paramText.length() - 1);
+            reuqestMap.forEach((key,value) ->{
+                paramText.append(key);
+                paramText.append("=");
+                try {
+                    paramText.append(URLEncoder.encode(String.valueOf(value), "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                paramText.append("&");
+            });
 
+
+        //delete &
+        paramText.setLength(paramText.length()-1);
         return paramText.toString();
     }
 
@@ -75,13 +80,17 @@ public class SearchService {
                 .append(makeParam(requestDto));
 
         //make query
-        String requestParameter = URLEncoder.encode(requestParameterBuilder.toString(), "UTF-8");
+        String requestParameter = requestParameterBuilder.toString();
 
         //make author keyword
         String authorization = makeAuthorization(kakaoApiInfo.getAuthKeyword(), kakaoApiInfo.getAppKey());
 
         result = WebUtils.httpRequest("GET", requestParameter , authorization);
-        apiResponseDto = mapper.readValue(result, ResponseDto.class);
+
+        if(!result.isEmpty()){
+            apiResponseDto = mapper.readValue(result, ResponseDto.class);
+        }
+
 
         return apiResponseDto;
     }

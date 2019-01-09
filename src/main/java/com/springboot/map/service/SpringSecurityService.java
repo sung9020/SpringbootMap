@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import sun.rmi.server.UnicastServerRef;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -42,7 +42,7 @@ public class SpringSecurityService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         UserInfoDto userInfoDto = memberRepository.findByUserId(username).findFirst().map(UserInfoDto::new).get();

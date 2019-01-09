@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class ResponseDto {
 
-    MetaDto metaDto;
+    MetaDto meta;
     List<DocumentsDto> documents;
 
 }

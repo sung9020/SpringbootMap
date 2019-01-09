@@ -19,6 +19,11 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+  mvc:
+    view:
+      prefix: /resources/templates/
+      suffix: .hbs
+
 server:
   tomcat:
     accesslog:
@@ -35,10 +40,6 @@ static:
   resource:
     location: file:///C:/map/
 
-mvc:
-  view:
-    prefix: /resources/templates/
-    suffix: .hbs
 
 company:
   kakao:
@@ -46,7 +47,7 @@ company:
 
 
 
-logging:
-  level:
-   ROOT: DEBUG
+#logging:
+#  level:
+#   ROOT: DEBUG
 ---

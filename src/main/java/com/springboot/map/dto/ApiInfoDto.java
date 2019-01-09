@@ -22,7 +22,9 @@ public class ApiInfoDto {
                 .authKeyword(authKeyword)
                 .build();
     }
+    public ApiInfoDto(){
 
+    }
     public ApiInfoDto(ApiInfo entity){
         this.id = entity.getId();
         this.domain = entity.getDomain();
