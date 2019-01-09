@@ -1,9 +1,9 @@
-package com.springboot.map.entity;
+package com.springboot.map.dto;
 
 import lombok.Data;
 
 @Data
-public class Request {
+public class RequestDto {
     private String query;
     private String category_group_code;
     private String x;
@@ -14,7 +14,7 @@ public class Request {
     private int size;
     private String sort;
 
-    public Request(){
+    public RequestDto(){
         this.page = 1;
         this.size = 15;
         this.sort = "accuracy";

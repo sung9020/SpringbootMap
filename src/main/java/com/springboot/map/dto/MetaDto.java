@@ -1,9 +1,9 @@
-package com.springboot.map.entity;
+package com.springboot.map.dto;
 
 import lombok.Data;
 
 @Data
-public class Meta {
+public class MetaDto {
 
     String same_name;
     String pageable_count;

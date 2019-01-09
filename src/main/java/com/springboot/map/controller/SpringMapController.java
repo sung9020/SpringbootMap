@@ -1,28 +1,45 @@
 package com.springboot.map.controller;
 
-import com.springboot.map.entity.Response;
+import com.springboot.map.dto.RequestDto;
+import com.springboot.map.dto.ResponseDto;
+import com.springboot.map.service.SearchService;
+import com.springboot.map.service.SpringSecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class SpringMapController {
 
-    @RequestMapping("/main")
-    public Response main(HttpServletRequest request) throws Exception{
+    @Autowired
+    SearchService searchService;
 
-        Response response = new Response();
+    @Autowired
+    SpringSecurityService springSecurityService;
 
-        return response;
+    @RequestMapping(value = "/main")
+    public String main(Model model) throws Exception{
+
+        return "main";
     }
 
-    @RequestMapping("/search")
-    public Response search(HttpServletRequest request) throws Exception{
+    @RequestMapping(value = "/login")
+    public String login(Model model) throws Exception{
 
-        Response response = new Response();
+        return "login";
+    }
 
-        return response;
+    @RequestMapping( value = "/search", method= RequestMethod.POST)
+    public ResponseDto search(@RequestBody RequestDto userRequestDto) throws Exception{
+
+        ResponseDto responseDto = searchService.getKakaoKeywordData(userRequestDto);
+
+        return responseDto;
     }
 
 }

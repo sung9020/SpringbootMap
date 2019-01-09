@@ -58,6 +58,6 @@ public class WebUtils {
     }
 
     public static String httpRequest(String method, String url, String authorization) throws Exception{
-        return httpRequest(method, url, authorization, "", "");
+        return httpRequest(method, url, authorization, "", "application/x-www-form-urlencoded");
     }
 }
