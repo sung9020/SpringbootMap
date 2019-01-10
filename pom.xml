@@ -55,6 +55,27 @@
             <version>2.9.8</version>
         </dependency>
 
+        <!-- handlebars -->
+        <dependency>
+            <groupId>pl.allegro.tech.boot</groupId>
+            <artifactId>handlebars-spring-boot-starter</artifactId>
+            <version>0.3.1</version>
+        </dependency>
+
+        <!-- jpa-cloner -->
+        <dependency>
+            <groupId>com.github.nociar</groupId>
+            <artifactId>jpa-cloner</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -12,6 +12,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -31,18 +37,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(springSecurityService).passwordEncoder(passwordEncoder());
-    }
+        }
 
     public void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
+                    .antMatchers("/h2-console/**")
+                        .permitAll()
+                        .anyRequest().authenticated()
+                    .antMatchers("/resources/**")
+                        .permitAll() //Adding this line solved it
+                        .anyRequest().fullyAuthenticated()
+                    .antMatchers("/resources/**")
+                    .permitAll() //Adding this line solved it
+                    .anyRequest().fullyAuthenticated()
+                .and()
+                .csrf()
+                    .requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
+                .and()
+                .headers()
+                    .addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy","script-src 'self'"))
+                    .frameOptions().disable()
                 .and()
                 .formLogin()
-                .usernameParameter("userId")
-                .passwordParameter("passward")
-                .permitAll()
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/main")
                 .and()
-                .logout().permitAll().logoutSuccessUrl("/");
+                .logout()
+                    .permitAll()
+                    .logoutSuccessUrl("/login");
     }
 
 }

@@ -1,28 +1,65 @@
 package com.springboot.map.controller;
 
-import com.springboot.map.entity.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.springboot.map.dto.KeywordRankDto;
+import com.springboot.map.dto.RequestDto;
+import com.springboot.map.dto.ResponseDto;
+import com.springboot.map.dto.ResultDto;
+import com.springboot.map.service.SearchService;
+import com.springboot.map.service.SpringSecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.management.MalformedObjectNameException;
+import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*")
 public class SpringMapController {
 
-    @RequestMapping("/main")
-    public Response main(HttpServletRequest request) throws Exception{
+    @Autowired
+    SearchService searchService;
 
-        Response response = new Response();
+    @Autowired
+    SpringSecurityService springSecurityService;
 
-        return response;
+    @RequestMapping(value = "/main")
+    public String main(Model model) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+       List<KeywordRankDto> keywordRankDtoList = searchService.getTopKeywordRank();
+       model.addAttribute("keywordRankDtoList", keywordRankDtoList);
+
+        return "main";
     }
 
-    @RequestMapping("/search")
-    public Response search(HttpServletRequest request) throws Exception{
+    @RequestMapping(value = "/login")
+    public String login(Model model) throws Exception{
 
-        Response response = new Response();
+        return "login";
+    }
 
-        return response;
+    @RequestMapping( value = "/search", method= RequestMethod.POST)
+    public @ResponseBody ResponseDto search(@RequestBody RequestDto userRequestDto) throws Exception{
+
+        ResultDto keywordRank = searchService.saveKeywordRank(userRequestDto);
+        ResponseDto responseDto = searchService.getKakaoData(userRequestDto);
+
+        return responseDto;
+    }
+
+    @RequestMapping( value = "/keywordrank", method= RequestMethod.POST)
+    public @ResponseBody List<KeywordRankDto> keywordrank() throws Exception{
+
+        List<KeywordRankDto> keywordRankDtoList = searchService.getTopKeywordRank();
+
+        return keywordRankDtoList;
     }
 
 }

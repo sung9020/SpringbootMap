@@ -1,6 +1,29 @@
 spring:
   profiles: local
 
+  datasource:
+    data: classpath:init-app.sql
+    url:
+    platform: h2
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    database-platform: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+  mvc:
+    view:
+      prefix: /resources/templates/
+      suffix: .hbs
+
 server:
   tomcat:
     accesslog:
@@ -17,23 +40,14 @@ static:
   resource:
     location: file:///C:/map/
 
-mvc:
-  view:
-    prefix: /resources/templates/
-    suffix: .jsp
 
-  datasource:
-    platform: h2
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-  jpa:
-    database-platform: H2
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
+company:
+  kakao:
+    domain: dapi.kakao.com
 
-kakao:
-  domain: dapi.kakao.com
 
+
+#logging:
+#  level:
+#   ROOT: DEBUG
 ---
