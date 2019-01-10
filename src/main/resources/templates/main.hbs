@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-안녕 반가워. 나는 스프링 부트라고 해 <br>
+<h1>키워드로 장소 찾기 앱</h1>
 <div class="input-group mb-3">
     <input type="text" class="form-control" id="keyword" placeholder="키워드를 입력하세요.">
     <div class="input-group-append">
@@ -19,38 +19,54 @@
     </div>
 </div>
 
-<div id="searchList">
-
+<br>
+<div id="keywordSection">
+    <ul class="list-group">
+        <li class="list-group-item active">키워드 랭킹 TOP 10</li>
+        {{#keywordRankDtoList}}
+            <li class="list-group-item">{{keyword}} - {{totalcount}}회</li>
+        {{/keywordRankDtoList}}
+    </ul>
 </div>
 
-<div id="pages"></div>
-
-<div id="detailSection"></div>
-
-
-<script id="list-template" type="text/x-handlebars-template">
-<table class="table">
-   <thead>
+<div id="searchList">
+    <table class="table">
+        <thead>
         <tr>
             <th scope="col">id</th>
             <th scope="col">플레이스 이름</th>
         </tr>
-   </thead>
-   <tbody>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="pageSection"></div>
+
+<div id="detailSection">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script id="list-template" type="text/x-handlebars-template">
             \{{#documents}}
                 <tr>
-                    <th scope="row">\{{ id }}</th>
+                    <th scope="row">\{{ incremented @index }}</th>
                     <td><a id="\{{id}}" class="place" href="javascript:void(0)">\{{ place_name }}</a></td>
 <!--                    <td>\{{ address_name }}<br><em>\{{ road_address_name }}</em></td>
                     <td>\{{ phone }}</td>-->
                 </tr>
             \{{/documents}}
-    </tbody>
-</table>
 </script>
 
 
-<script id="page" type="text/x-handlebars-template">
+<script id="page-template" type="text/x-handlebars-template">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -59,44 +75,46 @@
         </ul>
     </nav>
 </script>
-<script id="detail" type="text/x-handlebars-template">
-    <div class="modal fade" id="\{{id}}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
+<script id="detail-template" type="text/x-handlebars-template">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">\{{place_name}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-    <div class="modal-body">
-        <div class="form-group">
-            <label for="message-text" class="col-form-label">카테고리 :</label>
-            <input type="text" class="form-control" id="category_name" value="\{{category_name}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="recipient-name" class="col-form-label">주소 :</label>
-            <input type="text" class="form-control" id="address_name" value="\{{address_name}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="message-text" class="col-form-label">도로명 주소:</label>
-            <input type="text" class="form-control" id="road_address_name" value="\{{road_address_name}}" readonly>
-        </div>
-        <div class="form-group">
-            <label for="message-text" class="col-form-label">전화번호:</label>
-            <input type="text" class="form-control" id="phone" value="\{{phone}}"  readonly>
-        </div>
-        <div class="form-group">
-            <label for="message-text" class="col-form-label">웹 주소 :</label>
-            <input type="text" class="form-control" id="place_url" value="\{{place_url}}" readonly>
-        </div>
-     </div>
-
-    </div>
-    </div>
-    </div>
-
+                        <h5 class="modal-title" id="exampleModalLabel">\{{place_name}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">카테고리 :</label>
+                    <input type="text" class="form-control" id="category_name" value="\{{category_name}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">주소 :</label>
+                    <input type="text" class="form-control" id="address_name" value="\{{address_name}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">도로명 주소:</label>
+                    <input type="text" class="form-control" id="road_address_name" value="\{{road_address_name}}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">전화번호:</label>
+                    <input type="text" class="form-control" id="phone" value="\{{phone}}"  readonly>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">웹 주소 :</label>
+                    <input type="text" class="form-control" id="place_url" value="\{{place_url}}" readonly>
+                </div>
+             </div>
 </script>
+
+<script id="keywordRank-template" type="text/x-handlebars-template">
+    <ul class="list-group">
+        <li class="list-group-item active">키워드 랭킹 TOP 10</li>
+        \{{#keywordRankDtoList}}
+            <li class="list-group-item">\{{keyword}} - \{{totalcount}}회</li>
+        \{{/keywordRankDtoList}}
+    </ul>
+</script>
+
 <script>
     var meta;
     var document;
@@ -106,18 +124,10 @@
 
     });
 
-
-
-
-    /*Handlebars.registerHelper('list', function(items, options) {
-        var out = "<ul>";
-
-        for(var i=0, l=items.length; i<l; i++) {
-            out = out + "<li>" + options.fn(items[i]) + "</li>";
-        }
-
-        return out + "</ul>";
-    });*/
+    Handlebars.registerHelper('incremented', function (index) {
+        index++;
+        return index;
+    });
 
 </script>
 
