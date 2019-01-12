@@ -62,4 +62,12 @@ public class SpringMapController {
         return keywordRankDtoList;
     }
 
+
+    @RequestMapping( value = "/page", method= RequestMethod.POST)
+    public @ResponseBody ResponseDto Page(@RequestBody RequestDto userRequestDto) throws Exception{
+
+        ResponseDto responseDto = searchService.getKakaoData(userRequestDto);
+
+        return responseDto;
+    }
 }

@@ -17,9 +17,35 @@ var main = {
                 var html = template(data);
                 $('tbody').empty().append(html);
 
-
                 main.makeClickEvent();
                 main.viewKeywordRank();
+                pagination.createPage(meta.pageable_count);
+
+            },
+            error: function (request,status, error) {
+                alert(error);
+            }
+        })
+
+    },
+    getPage : function () {
+        var jsonParam =  main.makeParam();
+
+        $.ajax({
+            type: 'POST',
+            url: '/page',
+            contentType : "application/json",
+            data: jsonParam,
+            success: function (data) {
+                meta = data.meta;
+                documents = data.documents;
+                keywordRank = data.keywordRank;
+                var source = $('#list-template').html();
+                var template = Handlebars.compile(source);
+                var html = template(data);
+                $('tbody').empty().append(html);
+
+                main.makeClickEvent();
 
             },
             error: function (request,status, error) {
@@ -31,7 +57,14 @@ var main = {
     makeParam : function () {
         var RequestDto = new Object();
         var query = $("#keyword").val();
+        var page = Number($(".page-item.item.active").text());
+
         RequestDto.query =query;
+        if(page == 0){
+            RequestDto.page = 1;
+        }else{
+            RequestDto.page = page;
+        }
         var jsonParam = JSON.stringify(RequestDto);
         return jsonParam;
     },
@@ -59,7 +92,7 @@ var main = {
             var id = event.target.getAttribute("id");
 
             $.each(documents, function( index, value ) {
-                if (value.id = id){
+                if (value.id == id){
                     var source = $('#detail-template').html();
                     var template = Handlebars.compile(source);
                     var html = template(value);
@@ -70,6 +103,5 @@ var main = {
             });
         });
     }
-
 
 }
