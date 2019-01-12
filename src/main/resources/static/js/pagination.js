@@ -4,7 +4,7 @@ var pagination = {
     limit : 0,
     row : 0,
     createPage : function(pageableCount){
-        currentPageLimit = pageableCount / pagination.row;
+        currentPageLimit = Math.floor(pageableCount / pagination.row);
 
         var source = $('#page-template').html();
         var template = Handlebars.compile(source);
@@ -25,10 +25,8 @@ var pagination = {
 
                 $(".page-item.item:first").addClass("active");
             }
-
-            pagination.setClickEvent();
         }  else{
-            //nothing
+            $('#pageSection').empty()
         }
     },
     next : function () {

@@ -50,7 +50,8 @@
 
         </div>
     </div>
-    {{#if exist}}
+    <div class="row"></div>
+    {{#if error}}
     <div class="row">
         <div class="col-5">
             <div class="alert alert-warning" role="alert">
@@ -64,17 +65,9 @@
 
         </div>
     </div>
-    {{/if }}
+    {{/if}}
 
 </div>
 </body>
-<script>
-    Handlebars.registerHelper('if', function(conditional, options) {
-        var error = util.getUrlParam("error");
-        if(error) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
-    });
-</script>
+
 </html>

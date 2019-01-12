@@ -17,7 +17,7 @@ var main = {
                 var html = template(data);
                 $('tbody').empty().append(html);
 
-                main.makeClickEvent();
+
                 main.viewKeywordRank();
                 pagination.createPage(meta.pageable_count);
 
@@ -39,13 +39,11 @@ var main = {
             success: function (data) {
                 meta = data.meta;
                 documents = data.documents;
-                keywordRank = data.keywordRank;
+
                 var source = $('#list-template').html();
                 var template = Handlebars.compile(source);
                 var html = template(data);
                 $('tbody').empty().append(html);
-
-                main.makeClickEvent();
 
             },
             error: function (request,status, error) {
