@@ -7,11 +7,14 @@
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/handlebars-v4.0.12.js"></script>
+    <script src="/js/pagination.js"></script>
     <script src="/js/include.js"></script>
+
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<h1>키워드로 장소 찾기 앱</h1>
+<h1>키워드 장소 찾기 앱!</h1>
+
 <div class="input-group mb-3">
     <input type="text" class="form-control" id="keyword" placeholder="키워드를 입력하세요.">
     <div class="input-group-append">
@@ -29,8 +32,12 @@
     </ul>
 </div>
 
-<div id="searchList">
+<div id="searchList" class="table">
     <table class="table">
+        <colgroup>
+            <col width="20%">
+            <col width="30%">
+        </colgroup>
         <thead>
         <tr>
             <th scope="col">id</th>
@@ -59,8 +66,7 @@
                 <tr>
                     <th scope="row">\{{ incremented @index }}</th>
                     <td><a id="\{{id}}" class="place" href="javascript:void(0)">\{{ place_name }}</a></td>
-<!--                    <td>\{{ address_name }}<br><em>\{{ road_address_name }}</em></td>
-                    <td>\{{ phone }}</td>-->
+
                 </tr>
             \{{/documents}}
 </script>
@@ -69,9 +75,11 @@
 <script id="page-template" type="text/x-handlebars-template">
     <nav aria-label="Page navigation example">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">\{{page}}</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item prev"><a class="page-link prev" href="javascript:void(0)">Previous</a></li>
+            \{{#times start end}}
+            <li class="page-item item"><a class="page-link item" href="javascript:void(0)">\{{this}}</a></li>
+            \{{/times}}
+            <li class="page-item next"><a class="page-link next" href="javascript:void(0)">Next</a></li>
         </ul>
     </nav>
 </script>
@@ -118,16 +126,32 @@
 <script>
     var meta;
     var document;
+    var totalPageCount = 0;
+    //set page option
+    pagination.limit = 5;
+    pagination.row = 15;
 
     $("#search").click(function() {
         main.search();
 
     });
 
-    Handlebars.registerHelper('incremented', function (index) {
-        index++;
-        return index;
+
+    $(function() {
+        Handlebars.registerHelper('incremented', function (index) {
+            index++;
+            return index;
+        });
+
+        Handlebars.registerHelper('times', function(start, end, block) {
+            var accum = '';
+            for(var i = start; i <= end; i+=1)
+                accum += block.fn(i);
+            return accum;
+        });
     });
+
+
 
 </script>
 
