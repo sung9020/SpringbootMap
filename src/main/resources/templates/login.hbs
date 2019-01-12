@@ -4,24 +4,77 @@
     <title>로그인</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/handlebars-v4.0.12.js"></script>
+    <script src="/js/include.js"></script>
+
 </head>
 <body>
-<h1>Login</h1>
 
-<form name='f' action="login" method='POST'>
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username'></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password' /></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
-        </tr>
-    </table>
-</form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <h1> 로그인 해주세요 </h1>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-1">
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <form name='f' action="login" method='POST'>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">회원 아이디</label>
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="idHelp" placeholder="아이디를 입력하세요">
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">비밀번호</label>
+                    <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요" name='password'>
+                </div>
+                <button type="submit" class="btn text-dark bg-warning" name="submit" value="submit">접속</button>
+            </form>
+
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-1">
+
+        </div>
+    </div>
+    {{#if exist}}
+    <div class="row">
+        <div class="col-5">
+            <div class="alert alert-warning" role="alert">
+                아이디, 비밀번호를 확인해주세요.
+            </div>
+        </div>
+        <div class="col-1">
+
+        </div>
+        <div class="col-1">
+
+        </div>
+    </div>
+    {{/if }}
+
+</div>
 </body>
+<script>
+    Handlebars.registerHelper('if', function(conditional, options) {
+        var error = util.getUrlParam("error");
+        if(error) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+</script>
 </html>

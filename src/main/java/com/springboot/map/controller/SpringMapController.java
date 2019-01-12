@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.management.MalformedObjectNameException;
 import java.util.List;
 
 @Controller
@@ -30,6 +27,7 @@ public class SpringMapController {
     @Autowired
     SpringSecurityService springSecurityService;
 
+    /* main */
     @RequestMapping(value = "/main")
     public String main(Model model) throws Exception{
         ObjectMapper mapper = new ObjectMapper();
@@ -39,12 +37,14 @@ public class SpringMapController {
         return "main";
     }
 
+    /* login */
     @RequestMapping(value = "/login")
     public String login(Model model) throws Exception{
 
         return "login";
     }
 
+    /* search Page */
     @RequestMapping( value = "/search", method= RequestMethod.POST)
     public @ResponseBody ResponseDto search(@RequestBody RequestDto userRequestDto) throws Exception{
 
@@ -54,6 +54,7 @@ public class SpringMapController {
         return responseDto;
     }
 
+    /* search top 10 */
     @RequestMapping( value = "/keywordrank", method= RequestMethod.POST)
     public @ResponseBody List<KeywordRankDto> keywordrank() throws Exception{
 
@@ -62,7 +63,7 @@ public class SpringMapController {
         return keywordRankDtoList;
     }
 
-
+    /* search next Page */
     @RequestMapping( value = "/page", method= RequestMethod.POST)
     public @ResponseBody ResponseDto Page(@RequestBody RequestDto userRequestDto) throws Exception{
 

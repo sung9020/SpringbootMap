@@ -58,6 +58,7 @@ var main = {
         var RequestDto = new Object();
         var query = $("#keyword").val();
         var page = Number($(".page-item.item.active").text());
+        var size = pagination.row;
 
         RequestDto.query =query;
         if(page == 0){
@@ -65,6 +66,8 @@ var main = {
         }else{
             RequestDto.page = page;
         }
+        RequestDto.size = size;
+
         var jsonParam = JSON.stringify(RequestDto);
         return jsonParam;
     },
@@ -105,3 +108,16 @@ var main = {
     }
 
 }
+
+var util = {
+    getUrlParam : function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+                return null;
+            }
+            else{
+                return results[1] || 0;
+            }
+        }
+    }
+

@@ -3,8 +3,6 @@ package com.springboot.map.dto;
 import com.springboot.map.entity.KeywordRank;
 import lombok.Data;
 
-import javax.persistence.Id;
-
 @Data
 public class KeywordRankDto {
 

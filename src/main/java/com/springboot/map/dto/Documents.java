@@ -1,4 +1,4 @@
-package com.springboot.map.entity;
+package com.springboot.map.dto;
 
 import lombok.Data;
 

@@ -13,43 +13,57 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
 <body>
-<h1>키워드 장소 찾기 앱!</h1>
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control" id="keyword" placeholder="키워드를 입력하세요.">
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" id="search">검색</button>
+
+<div class="container">
+        <div class="col list-group-item-dark"><h1>키워드로 장소 검색</h1></div>
+    <div class="row">
+        <div class="col-6">
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" id="keyword" placeholder="키워드를 입력하세요.">
+            <div class="input-group-append">
+                <button class="btn text-dark bg-warning" type="button" id="search">검색</button>
+            </div>
+            </div>
+        </div>
+        <div class="col-9"></div>
+        <div class="col"> </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div id="keywordSection">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">키워드 랭킹 TOP 10</li>
+                    {{#keywordRankDtoList}}
+                        <li class="list-group-item">{{keyword}} - {{totalcount}}회</li>
+                    {{/keywordRankDtoList}}
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div id="searchList" class="table">
+                <table class="table table-bordered">
+                    <colgroup>
+                        <col width="20%">
+                        <col width="30%">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="table-secondary text-center">순서</th>
+                        <th scope="col"class="table-secondary text-center">플레이스 이름</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="pageSection" ></div>
+            </div>
+        </div>
+        <div class="col-1">
+        </div>
     </div>
 </div>
 
-<br>
-<div id="keywordSection">
-    <ul class="list-group">
-        <li class="list-group-item active">키워드 랭킹 TOP 10</li>
-        {{#keywordRankDtoList}}
-            <li class="list-group-item">{{keyword}} - {{totalcount}}회</li>
-        {{/keywordRankDtoList}}
-    </ul>
-</div>
-
-<div id="searchList" class="table">
-    <table class="table">
-        <colgroup>
-            <col width="20%">
-            <col width="30%">
-        </colgroup>
-        <thead>
-        <tr>
-            <th scope="col">id</th>
-            <th scope="col">플레이스 이름</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
-
-<div id="pageSection"></div>
 
 <div id="detailSection">
     <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
@@ -64,8 +78,8 @@
 <script id="list-template" type="text/x-handlebars-template">
             \{{#documents}}
                 <tr>
-                    <th scope="row">\{{ incremented @index }}</th>
-                    <td><a id="\{{id}}" class="place" href="javascript:void(0)">\{{ place_name }}</a></td>
+                    <th scope="row" class="text-center">\{{ incremented @index }}</th>
+                    <td class="text-center"><ins><a id="\{{id}}" class="place text-muted" href="javascript:void(0)">\{{ place_name }}</a></ins></td>
 
                 </tr>
             \{{/documents}}
@@ -74,12 +88,12 @@
 
 <script id="page-template" type="text/x-handlebars-template">
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li class="page-item prev"><a class="page-link prev" href="javascript:void(0)">Previous</a></li>
+        <ul class="pagination justify-content-center">
+            <li class="page-item prev"><a class="page-link prev bg-warning text-dark" href="javascript:void(0)">Previous</a></li>
             \{{#times start end}}
-            <li class="page-item item"><a class="page-link item" href="javascript:void(0)">\{{this}}</a></li>
+            <li class="page-item item"><a class="page-link item bg-warning text-dark" href="javascript:void(0)">\{{this}}</a></li>
             \{{/times}}
-            <li class="page-item next"><a class="page-link next" href="javascript:void(0)">Next</a></li>
+            <li class="page-item next"><a class="page-link next bg-warning text-dark" href="javascript:void(0)">Next</a></li>
         </ul>
     </nav>
 </script>
@@ -116,7 +130,7 @@
 
 <script id="keywordRank-template" type="text/x-handlebars-template">
     <ul class="list-group">
-        <li class="list-group-item active">키워드 랭킹 TOP 10</li>
+        <li class="list-group-item list-group-item-dark">키워드 랭킹 TOP 10</li>
         \{{#keywordRankDtoList}}
             <li class="list-group-item">\{{keyword}} - \{{totalcount}}회</li>
         \{{/keywordRankDtoList}}
@@ -126,10 +140,10 @@
 <script>
     var meta;
     var document;
-    var totalPageCount = 0;
+    var currentPageCount = 0;
     //set page option
-    pagination.limit = 5;
-    pagination.row = 15;
+    pagination.limit = 3;
+    pagination.row = 10;
 
     $("#search").click(function() {
         main.search();

@@ -5,21 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.map.dto.ApiInfoDto;
 import com.springboot.map.dto.KeywordRankDto;
 import com.springboot.map.dto.ResultDto;
-import com.springboot.map.entity.ApiInfo;
 import com.springboot.map.dto.RequestDto;
 import com.springboot.map.dto.ResponseDto;
 import com.springboot.map.entity.KeywordRank;
 import com.springboot.map.repositoy.KeywordRankRepository;
 import com.springboot.map.utils.WebUtils;
-import org.hibernate.dialect.Oracle10gDialect;
-import org.hibernate.dialect.Oracle12cDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +49,6 @@ public class SearchService {
 
         Map<String, Object> reuqestMap = mapper.convertValue(requestDto, Map.class);
         StringBuffer paramText = new StringBuffer();
-
-
             reuqestMap.forEach((key,value) ->{
                 paramText.append(key);
                 paramText.append("=");
@@ -84,7 +78,6 @@ public class SearchService {
         String url = "/v2/local/search/keyword.json?";
         String result ="";
         ResponseDto apiResponseDto = new ResponseDto();
-
         ApiInfoDto kakaoApiInfo = kakaoService.getKakaoApiInfo();
 
         StringBuilder requestParameterBuilder = new StringBuilder();
@@ -104,7 +97,6 @@ public class SearchService {
         if(!result.isEmpty()){
             apiResponseDto = mapper.readValue(result, ResponseDto.class);
         }
-
 
         return apiResponseDto;
     }

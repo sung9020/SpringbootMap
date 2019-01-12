@@ -4,8 +4,7 @@ var pagination = {
     limit : 0,
     row : 0,
     createPage : function(pageableCount){
-        totalPageCount = pageableCount;
-        var currentPageLimit = totalPageCount / pagination.row;
+        currentPageLimit = pageableCount / pagination.row;
 
         var source = $('#page-template').html();
         var template = Handlebars.compile(source);
@@ -36,7 +35,7 @@ var pagination = {
         // current page group
         var lastPage = Number($(".page-item.item:last").text());
         var nextPage = lastPage + 1;
-        var rest = totalPageCount - lastPage;
+        var rest = currentPageLimit - lastPage;
         var source = $('#page-template').html();
         var template = Handlebars.compile(source);
 
@@ -54,6 +53,7 @@ var pagination = {
             $('.page-item.next').addClass("disabled");
 
         }
+        main.getPage();
 
         return false;
     },
@@ -75,6 +75,7 @@ var pagination = {
 
 
         $(".page-item.item:first").addClass("active");
+        main.getPage();
 
         return false;
     },

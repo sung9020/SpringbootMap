@@ -2,15 +2,8 @@ package com.springboot.map.entity;
 
 import lombok.Builder;
 import lombok.Data;
-import net.bytebuddy.asm.Advice;
-import org.omg.CORBA.portable.IDLEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity
 @Table(name ="USERS")

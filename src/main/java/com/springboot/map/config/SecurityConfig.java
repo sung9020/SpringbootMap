@@ -8,16 +8,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
-import org.springframework.security.web.header.writers.frameoptions.WhiteListedAllowFromStrategy;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -46,11 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                         .anyRequest().authenticated()
                     .antMatchers("/resources/**")
-                        .permitAll() //Adding this line solved it
-                        .anyRequest().fullyAuthenticated()
-                    .antMatchers("/resources/**")
-                    .permitAll() //Adding this line solved it
-                    .anyRequest().fullyAuthenticated()
+                        .permitAll()
+                        .anyRequest().permitAll()    //Adding this line solved it
                 .and()
                 .csrf()
                     .requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))
@@ -63,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .permitAll()
                     .defaultSuccessUrl("/main")
+                    .failureUrl("/login?error=true")
                 .and()
                 .logout()
                     .permitAll()
