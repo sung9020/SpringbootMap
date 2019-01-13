@@ -4,7 +4,7 @@ var pagination = {
     limit : 0,
     row : 0,
     createPage : function(pageableCount){
-        currentPageLimit = Math.floor(pageableCount / pagination.row);
+        window.currentPageLimit = Math.floor(pageableCount / pagination.row);
 
         var source = $('#page-template').html();
         var template = Handlebars.compile(source);
@@ -98,8 +98,6 @@ var pagination = {
             $(".page-item.item").removeClass("active");
             $(".page-item.item").eq(order).addClass("active");
             main.getPage();
-
-
         });
     }
 }

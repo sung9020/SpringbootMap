@@ -53,9 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/**")
                         .permitAll()
                         .anyRequest().authenticated()    //Adding this line solved it
-                    .antMatchers("/css/**","/js/**")
-                        .permitAll()
-                        .anyRequest().authenticated()
                 .and()
                 .csrf()
                     .requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**"))

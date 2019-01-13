@@ -9,9 +9,9 @@ var main = {
             contentType : "application/json",
             data: jsonParam,
             success: function (data) {
-                meta = data.meta;
-                documents = data.documents;
-                keywordRank = data.keywordRank;
+                window.meta = data.meta;
+                window.documents = data.documents;
+
                 var source = $('#list-template').html();
                 var template = Handlebars.compile(source);
                 var html = template(data);
@@ -37,8 +37,8 @@ var main = {
             contentType : "application/json",
             data: jsonParam,
             success: function (data) {
-                meta = data.meta;
-                documents = data.documents;
+                window.meta = data.meta;
+                window.documents = data.documents;
 
                 var source = $('#list-template').html();
                 var template = Handlebars.compile(source);
@@ -69,7 +69,7 @@ var main = {
         var jsonParam = JSON.stringify(RequestDto);
         return jsonParam;
     },
-    viewKeywordRank : function (keywordRank) {
+    viewKeywordRank : function () {
         $.ajax({
             type: 'POST',
             url: '/keywordrank',
@@ -92,7 +92,7 @@ var main = {
         $(document).on("click", "a.place" , function(event) {
             var id = event.target.getAttribute("id");
 
-            $.each(documents, function( index, value ) {
+            $.each(window.documents, function( index, value ) {
                 if (value.id == id){
                     var source = $('#detail-template').html();
                     var template = Handlebars.compile(source);

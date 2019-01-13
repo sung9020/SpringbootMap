@@ -138,9 +138,6 @@
 </script>
 
 <script>
-    var meta;
-    var document;
-    var currentPageCount = 0;
     //set page option
     pagination.limit = 3;
     pagination.row = 10;
@@ -150,6 +147,11 @@
         main.search();
     });
 
+    $("#keyword").keydown(function(e) {
+        if (e.keyCode == 13){
+            main.search();
+        }
+    });
 
     $(function() {
         Handlebars.registerHelper('incremented', function (index) {
