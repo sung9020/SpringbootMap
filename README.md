@@ -18,7 +18,7 @@ build 명령어
 mvn -Dmaven.test.skip=true clean package  
 
 
-jar 파일 구동
+jar 파일 구동  
 java -jar -Dspring.profiles.active=local springbootmap-0.0.1-SNAPSHOT.jar
 
 
