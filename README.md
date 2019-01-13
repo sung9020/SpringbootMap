@@ -29,5 +29,9 @@ java -jar -Dspring.profiles.active=local springbootmap-0.0.1-SNAPSHOT.jar
 http:/localhost:9090/
 
 
+접속 admin 계정
+ID:123msn / PW:1234
+
+
 h2 Base 접속 경로  
 /h2-console
