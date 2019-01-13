@@ -17,9 +17,16 @@ H2 Database
 build 명령어   
 mvn -Dmaven.test.skip=true clean package  
 
+구동가능한 빌드파일
+https://github.com/sung9020/SpringbootMap/releases/tag/4.0
+
 
 jar 파일 구동  
 java -jar -Dspring.profiles.active=local springbootmap-0.0.1-SNAPSHOT.jar
+
+
+접속URL
+http:/localhost:9090/
 
 
 h2 Base 접속 경로  
