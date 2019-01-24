@@ -100,7 +100,7 @@ public class SearchService {
 
         return apiResponseDto;
     }
-
+    /* git flow test */
     @Transactional(readOnly = true)
     public List<KeywordRankDto> getTopKeywordRank(){
 
